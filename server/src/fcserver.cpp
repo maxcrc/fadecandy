@@ -466,6 +466,9 @@ void FCServer::cbJsonMessage(libwebsocket *wsi, rapidjson::Document &message, vo
         self->jsonServerInfo(message);
     } else if (message.HasMember("device")) {
         self->jsonDeviceMessage(message);
+    } else if (!strcmp(type, "stop")) {
+		lwsl_notice("NOTICE: Stop command received. Stopping.");
+		exit(1);
     } else {
         message.AddMember("error", "Unknown message type", message.GetAllocator());
     }
